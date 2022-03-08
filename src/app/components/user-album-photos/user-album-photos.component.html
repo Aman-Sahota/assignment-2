@@ -1,0 +1,14 @@
+<div class="container">
+  <app-go-back></app-go-back>
+  <app-loader *ngIf="isLoading"></app-loader>
+  <div class="row">
+    <div class="col">
+      <img
+        *ngFor="let userPhoto of userPhotos"
+        [src]="userPhoto.url"
+        alt=""
+        class="img-thumbnail rounded"
+      />
+    </div>
+  </div>
+</div>

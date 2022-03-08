@@ -1,0 +1,25 @@
+<div class="container">
+  <app-go-back></app-go-back>
+  <app-loader *ngIf="isLoading"></app-loader>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header text-center">
+          <h2>Todos</h2>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li
+            class="list-group-item text-capitalize {{
+              userTodo.completed ? 'active' : ''
+            }}"
+            *ngFor="let userTodo of userTodos"
+          >
+            <i *ngIf="userTodo.completed" class="bi bi-check2-square"></i>
+            <i *ngIf="!userTodo.completed" class="bi bi-app"></i>
+            {{ userTodo.title }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

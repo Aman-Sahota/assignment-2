@@ -1,0 +1,26 @@
+.panel {
+  border: 0.2rem solid #bce8f1;
+  background-color: lighten($color: #d9edf7, $amount: 50%);
+  .panel-heading {
+    color: #31708f;
+    background-color: #d9edf7;
+  }
+
+  .panel-body {
+    .table-user-information {
+      tbody {
+        tr {
+          border-top: 1px solid rgb(221, 221, 221);
+
+          &:first-child {
+            border-top: 0;
+          }
+
+          td {
+            border-top: 0;
+          }
+        }
+      }
+    }
+  }
+}

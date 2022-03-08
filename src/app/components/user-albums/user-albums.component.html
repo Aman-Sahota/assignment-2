@@ -1,0 +1,16 @@
+<div class="container">
+  <app-go-back></app-go-back>
+  <app-loader *ngIf="isLoading"></app-loader>
+  <div class="list-group rounded gap-3">
+    <a
+      routerLink="{{ userAlbum.id }}"
+      class="list-group-item list-group-item-action text-capitalize p-4 fs-4 rounded"
+      *ngFor="let userAlbum of userAlbums"
+    >
+      <span>
+        <i class="bi bi-journal-album"></i>
+      </span>
+      {{ userAlbum.title }}</a
+    >
+  </div>
+</div>

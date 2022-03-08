@@ -1,0 +1,96 @@
+<div class="container p-4" *ngIf="userDetail">
+  <app-go-back></app-go-back>
+  <app-loader *ngIf="isLoading"></app-loader>
+  <div class="row">
+    <div
+      class="col-xs-12 col-sm-12 col-md-10 col-lg-6 offset-xs-0 offset-sm-0 offset-md-1 offset-lg-3"
+    >
+      <div class="panel rounded">
+        <div class="panel-heading p-2">
+          <h3 class="panel-title">{{ userDetail.username }}</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-3 col-lg-3 text-center">
+              <img
+                alt="User Pic"
+                [src]="userDetail.image"
+                class="img-fluid img-thumbnail"
+              />
+            </div>
+
+            <div class="col-md-9 col-lg-9">
+              <table class="table table-user-information">
+                <tbody>
+                  <tr>
+                    <td>Full name:</td>
+                    <td>{{ userDetail.name }}</td>
+                  </tr>
+                  <tr>
+                    <td>Company:</td>
+                    <td>{{ userDetail.company.name }}</td>
+                  </tr>
+                  <tr>
+                    <td>Website:</td>
+                    <td>
+                      <a [href]="userDetail.website" target="_blank">
+                        {{ userDetail.website }}
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Home Address</td>
+                    <td>
+                      {{ userDetail.address.suite }},
+                      {{ userDetail.address.street }},
+                      {{ userDetail.address.city }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Email</td>
+                    <td>
+                      <a href="mailto:{{ userDetail.email }}">{{
+                        userDetail.email
+                      }}</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Phone Number</td>
+                    <td>
+                      {{ userDetail.phone }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <div class="row mb-2">
+            <div class="col-4 text-center">
+              <a
+                class="btn btn-primary"
+                routerLink="/users/{{ userDetail.id }}/posts"
+                >Posts</a
+              >
+            </div>
+            <div class="col-4 text-center">
+              <a
+                class="btn btn-primary"
+                routerLink="/users/{{ userDetail.id }}/albums"
+                >Albums</a
+              >
+            </div>
+            <div class="col-4 text-center">
+              <a
+                class="btn btn-primary"
+                routerLink="/users/{{ userDetail.id }}/todos"
+                >Todos</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

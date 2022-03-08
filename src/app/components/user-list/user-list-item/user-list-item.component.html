@@ -1,0 +1,12 @@
+<div class="card cursor-pointer rounded" (click)="onCardClick(user.id)">
+  <img
+    class="card-img-top img-thumbnail rounded-circle"
+    [src]="user.image"
+    alt=""
+    [ngStyle]="{ height: '17rem' }"
+  />
+  <div class="card-body text-center">
+    <h4 class="card-title">{{ user.username }}</h4>
+    <p class="card-text">{{ user.name }}</p>
+  </div>
+</div>
