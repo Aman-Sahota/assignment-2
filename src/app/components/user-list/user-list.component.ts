@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
-  users: any;
+  users: User[] = [];
   isLoading: boolean = false;
 
   constructor(private userSerice: UserService) {}
@@ -18,7 +19,7 @@ export class UserListComponent implements OnInit {
 
   fetchUsers() {
     this.isLoading = true;
-    this.userSerice.fetchUserList().subscribe((response) => {
+    this.userSerice.fetchUserList().subscribe((response: User[]) => {
       this.users = response;
       this.isLoading = false;
     });

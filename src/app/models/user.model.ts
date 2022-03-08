@@ -16,4 +16,5 @@ export interface User {
   phone: string;
   username: string;
   website: string;
+  image?: string;
 }
