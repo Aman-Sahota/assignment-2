@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/models/user.model';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./user-detail.component.scss'],
 })
 export class UserDetailComponent implements OnInit {
-  userDetail: any;
+  userDetail!: User;
   isLoading: boolean = false;
 
   constructor(
@@ -24,7 +25,7 @@ export class UserDetailComponent implements OnInit {
     this.isLoading = true;
     this.userService
       .fetchSelectedUser(this.activatedRoute.snapshot.params['userId'])
-      .subscribe((response) => {
+      .subscribe((response: User) => {
         this.userDetail = response;
         this.isLoading = false;
       });

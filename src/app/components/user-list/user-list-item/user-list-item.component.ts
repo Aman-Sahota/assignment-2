@@ -14,7 +14,19 @@ export class UserListItemComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onCardClick(userId: number) {
-    this.router.navigate([`users/${userId}`]);
+  goToUserDetail(userId: number) {
+    this.router.navigate([`/users/${userId}`]);
+  }
+
+  goToUserPosts(userId: number) {
+    this.router.navigate([`/users/${userId}/posts`]);
+  }
+
+  goToUserAlbums(userId: number) {
+    this.router.navigate([`/users/${userId}/albums`]);
+  }
+
+  goToUserTodos(userId: number) {
+    this.router.navigate([`/users/${userId}/todos`]);
   }
 }

@@ -4,20 +4,43 @@
   <div class="row">
     <div class="col-12">
       <div class="card">
-        <div class="card-header text-center">
-          <h2>Todos</h2>
+        <div class="card-header">
+          <h2>
+            Todos
+            <span class="badge bg-secondary rounded-pill">{{
+              getCount("incomplete")
+            }}</span>
+          </h2>
         </div>
         <ul class="list-group list-group-flush">
-          <li
-            class="list-group-item text-capitalize {{
-              userTodo.completed ? 'active' : ''
-            }}"
-            *ngFor="let userTodo of userTodos"
-          >
-            <i *ngIf="userTodo.completed" class="bi bi-check2-square"></i>
-            <i *ngIf="!userTodo.completed" class="bi bi-app"></i>
-            {{ userTodo.title }}
-          </li>
+          <div *ngFor="let userTodo of userTodos">
+            <li
+              class="list-group-item text-capitalize"
+              *ngIf="!userTodo.completed"
+            >
+              <i class="bi bi-app"></i>
+              {{ userTodo.title }}
+            </li>
+          </div>
+        </ul>
+        <div class="card-header">
+          <h2>
+            Completed
+            <span class="badge bg-secondary rounded-pill">{{
+              getCount("completed")
+            }}</span>
+          </h2>
+        </div>
+        <ul class="list-group list-group-flush">
+          <div *ngFor="let userTodo of userTodos">
+            <li
+              class="list-group-item text-capitalize text-decoration-line-through opacity-75"
+              *ngIf="userTodo.completed"
+            >
+              <i class="bi bi-check2-square"></i>
+              {{ userTodo.title }}
+            </li>
+          </div>
         </ul>
       </div>
     </div>

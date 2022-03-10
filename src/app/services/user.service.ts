@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { concatMap, map, Subject } from 'rxjs';
+import { Todo } from '../models/todo.model';
+import { Photo } from '../models/photo.model';
 
 @Injectable({
   providedIn: 'root',
@@ -37,9 +39,9 @@ export class UserService {
 
   fetchSelectedUser(userId: string) {
     return this.http
-      .get(`https://jsonplaceholder.typicode.com/users/${userId}`)
+      .get<User>(`https://jsonplaceholder.typicode.com/users/${userId}`)
       .pipe(
-        map((data) => {
+        map((data: User) => {
           return { ...data, image: this.images[Number(userId) - 1] };
         })
       );
@@ -58,7 +60,7 @@ export class UserService {
   }
 
   fetchTodos(userId: string) {
-    return this.http.get(
+    return this.http.get<Todo[]>(
       `https://jsonplaceholder.typicode.com/users/${userId}/todos`
     );
   }
@@ -70,7 +72,7 @@ export class UserService {
   }
 
   fetchAlbumPhotos(albumId: string) {
-    return this.http.get(
+    return this.http.get<Photo[]>(
       `https://jsonplaceholder.typicode.com/albums/${albumId}/photos`
     );
   }

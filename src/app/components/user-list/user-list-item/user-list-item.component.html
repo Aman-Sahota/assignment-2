@@ -1,4 +1,4 @@
-<div class="card cursor-pointer rounded" (click)="onCardClick(user.id)">
+<div class="card cursor-pointer rounded" (click)="goToUserDetail(user.id)">
   <img
     class="card-img-top img-thumbnail rounded-circle"
     [src]="user.image"
@@ -8,5 +8,49 @@
   <div class="card-body text-center">
     <h4 class="card-title">{{ user.username }}</h4>
     <p class="card-text">{{ user.name }}</p>
+  </div>
+  <div class="row mb-4 fs-2">
+    <div class="col text-center">
+      <span class="custom-icon" (click)="goToUserPosts(user.id)">
+        <i class="bi bi-file-earmark-post position-relative">
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >
+            {{ user.userPostCount }}
+            <span class="visually-hidden">User Posts</span>
+          </span>
+        </i>
+      </span>
+    </div>
+    <div class="col text-center">
+      <span class="custom-icon" (click)="goToUserAlbums(user.id)">
+        <i class="bi bi-journal-album position-relative">
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >
+            {{ user.userAlbumCount }}
+            <span class="visually-hidden">User Albums</span>
+          </span>
+        </i>
+      </span>
+    </div>
+    <div class="col text-center">
+      <span class="custom-icon" (click)="goToUserTodos(user.id)">
+        <i class="bi bi-list-task position-relative">
+          <span
+            class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger"
+          >
+            {{ user.userTodoFalseCount }}
+            <span class="visually-hidden">User incomplete todos</span>
+          </span>
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info"
+          >
+            {{ user.userTodoTrueCount }}
+            <span class="visually-hidden">User completed todos</span>
+          </span>
+        </i>
+      </span>
+    </div>
   </div>
 </div>

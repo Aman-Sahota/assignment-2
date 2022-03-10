@@ -17,4 +17,8 @@ export interface User {
   username: string;
   website: string;
   image?: string;
+  userPostCount?: number;
+  userAlbumCount?: number;
+  userTodoTrueCount?: number;
+  userTodoFalseCount?: number;
 }

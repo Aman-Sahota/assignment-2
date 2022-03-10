@@ -3,3 +3,18 @@
   border: 0;
   cursor: pointer;
 }
+
+.custom-icon {
+  i {
+    span {
+      font-size: 0.7rem;
+    }
+  }
+  &:hover {
+    padding: 1rem;
+    background-color: #0d6efd;
+    color: #fff;
+    transition: all 0.2s;
+    border-radius: 100%;
+  }
+}

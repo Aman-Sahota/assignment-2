@@ -10,7 +10,7 @@ import { UserPostsComponent } from './components/user-posts/user-posts.component
 import { UserAlbumsComponent } from './components/user-albums/user-albums.component';
 import { UserTodosComponent } from './components/user-todos/user-todos.component';
 import { UserListItemComponent } from './components/user-list/user-list-item/user-list-item.component';
-import { NotFoundComponent } from './components/common/not-found/not-found.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { UserAlbumPhotosComponent } from './components/user-album-photos/user-album-photos.component';
 import { GoBack } from './components/common/go-back/go-back.component';
 import { Loader } from './components/common/loader/loader.component';
