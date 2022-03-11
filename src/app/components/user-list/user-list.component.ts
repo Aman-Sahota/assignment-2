@@ -12,7 +12,7 @@ export class UserListComponent implements OnInit {
   users: User[] = [];
   isLoading: boolean = false;
 
-  constructor(private userSerice: UserService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.fetchUsers();
@@ -20,20 +20,20 @@ export class UserListComponent implements OnInit {
 
   fetchUsers() {
     this.isLoading = true;
-    this.userSerice.fetchUserList().subscribe(async (response: User[]) => {
+    this.userService.fetchUserList().subscribe(async (response: User[]) => {
       try {
         this.users = response;
         for (let index = 0; index < response.length; index++) {
           const user = response[index];
-          const values: any = await Promise.allSettled([
+          const values: any = await Promise.all([
             this.fetchUserPosts(user.id),
             this.fetchUserAlbums(user.id),
             this.fetchUserTodos(user.id),
           ]);
-          this.users[index].userPostCount = values[0].value;
-          this.users[index].userAlbumCount = values[1].value;
-          this.users[index].userTodoFalseCount = values[2].value.incomplete;
-          this.users[index].userTodoTrueCount = values[2].value.completed;
+          this.users[index].userPostCount = values[0];
+          this.users[index].userAlbumCount = values[1];
+          this.users[index].userTodoFalseCount = values[2].incomplete;
+          this.users[index].userTodoTrueCount = values[2].completed;
         }
         this.isLoading = false;
       } catch (error: any) {
@@ -45,7 +45,7 @@ export class UserListComponent implements OnInit {
 
   fetchUserPosts(userId: number) {
     return new Promise((resolve, reject) => {
-      this.userSerice.fetchUserPosts(userId.toString()).subscribe(
+      this.userService.fetchUserPosts(userId.toString()).subscribe(
         (response: any) => {
           resolve(response.length);
         },
@@ -58,7 +58,7 @@ export class UserListComponent implements OnInit {
 
   fetchUserAlbums(userId: number) {
     return new Promise((resolve, reject) => {
-      this.userSerice.fetchAlbums(userId.toString()).subscribe(
+      this.userService.fetchAlbums(userId.toString()).subscribe(
         (response: any) => {
           resolve(response.length);
         },
@@ -71,7 +71,7 @@ export class UserListComponent implements OnInit {
 
   fetchUserTodos(userId: number) {
     return new Promise((resolve, reject) => {
-      this.userSerice.fetchTodos(userId.toString()).subscribe(
+      this.userService.fetchTodos(userId.toString()).subscribe(
         (response: Todo[]) => {
           let completed = 0;
           let incomplete = 0;

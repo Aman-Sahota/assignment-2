@@ -1,4 +1,4 @@
-<div class="container p-4" *ngIf="userDetail">
+<div class="container p-4">
   <app-go-back></app-go-back>
   <app-loader *ngIf="isLoading"></app-loader>
   <div class="row">
@@ -7,14 +7,14 @@
     >
       <div class="panel rounded">
         <div class="panel-heading p-2">
-          <h3 class="panel-title">{{ userDetail.username }}</h3>
+          <h3 class="panel-title">{{ userDetail?.username }}</h3>
         </div>
         <div class="panel-body">
-          <div class="row">
+          <div class="row p-2">
             <div class="col-md-3 col-lg-3 text-center">
               <img
                 alt="User Pic"
-                [src]="userDetail.image"
+                [src]="userDetail?.image"
                 class="img-fluid img-thumbnail"
               />
             </div>
@@ -24,40 +24,40 @@
                 <tbody>
                   <tr>
                     <td>Full name:</td>
-                    <td>{{ userDetail.name }}</td>
+                    <td>{{ userDetail?.name }}</td>
                   </tr>
                   <tr>
                     <td>Company:</td>
-                    <td>{{ userDetail.company.name }}</td>
+                    <td>{{ userDetail?.company?.name }}</td>
                   </tr>
                   <tr>
                     <td>Website:</td>
                     <td>
-                      <a [href]="userDetail.website" target="_blank">
-                        {{ userDetail.website }}
+                      <a [href]="userDetail?.website" target="_blank">
+                        {{ userDetail?.website }}
                       </a>
                     </td>
                   </tr>
                   <tr>
                     <td>Home Address</td>
                     <td>
-                      {{ userDetail.address.suite }},
-                      {{ userDetail.address.street }},
-                      {{ userDetail.address.city }}
+                      {{ userDetail?.address?.suite }},
+                      {{ userDetail?.address?.street }},
+                      {{ userDetail?.address?.city }}
                     </td>
                   </tr>
                   <tr>
                     <td>Email</td>
                     <td>
-                      <a href="mailto:{{ userDetail.email }}">{{
-                        userDetail.email
+                      <a href="mailto:{{ userDetail?.email }}">{{
+                        userDetail?.email
                       }}</a>
                     </td>
                   </tr>
                   <tr>
                     <td>Phone Number</td>
                     <td>
-                      {{ userDetail.phone }}
+                      {{ userDetail?.phone }}
                     </td>
                   </tr>
                 </tbody>
@@ -70,23 +70,38 @@
             <div class="col-4 text-center">
               <a
                 class="btn btn-primary"
-                routerLink="/users/{{ userDetail.id }}/posts"
-                >Posts</a
+                routerLink="/users/{{ userDetail?.id }}/posts"
               >
+                Posts
+                <span class="badge bg-danger rounded-pill">
+                  {{ userDetail?.userPostCount }}
+                </span>
+              </a>
             </div>
             <div class="col-4 text-center">
               <a
                 class="btn btn-primary"
-                routerLink="/users/{{ userDetail.id }}/albums"
-                >Albums</a
+                routerLink="/users/{{ userDetail?.id }}/albums"
               >
+                Albums
+                <span class="badge bg-danger rounded-pill"
+                  >{{ userDetail?.userAlbumCount }}
+                </span>
+              </a>
             </div>
             <div class="col-4 text-center">
               <a
                 class="btn btn-primary"
-                routerLink="/users/{{ userDetail.id }}/todos"
-                >Todos</a
+                routerLink="/users/{{ userDetail?.id }}/todos"
               >
+                Todos
+                <span class="badge bg-danger rounded-pill me-1"
+                  >{{ userDetail?.userTodoFalseCount }}
+                </span>
+                <span class="badge bg-info rounded-pill"
+                  >{{ userDetail?.userTodoTrueCount }}
+                </span>
+              </a>
             </div>
           </div>
         </div>
