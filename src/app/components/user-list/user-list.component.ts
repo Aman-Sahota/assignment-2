@@ -20,22 +20,26 @@ export class UserListComponent implements OnInit {
 
   fetchUsers() {
     this.isLoading = true;
-    this.userSerice.fetchUserList().subscribe((response: User[]) => {
-      this.users = response;
-      for (let index = 0; index < response.length; index++) {
-        const user = response[index];
-        Promise.allSettled([
-          this.fetchUserPosts(user.id),
-          this.fetchUserAlbums(user.id),
-          this.fetchUserTodos(user.id),
-        ]).then((values: any) => {
+    this.userSerice.fetchUserList().subscribe(async (response: User[]) => {
+      try {
+        this.users = response;
+        for (let index = 0; index < response.length; index++) {
+          const user = response[index];
+          const values: any = await Promise.allSettled([
+            this.fetchUserPosts(user.id),
+            this.fetchUserAlbums(user.id),
+            this.fetchUserTodos(user.id),
+          ]);
           this.users[index].userPostCount = values[0].value;
           this.users[index].userAlbumCount = values[1].value;
           this.users[index].userTodoFalseCount = values[2].value.incomplete;
           this.users[index].userTodoTrueCount = values[2].value.completed;
-        });
+        }
+        this.isLoading = false;
+      } catch (error: any) {
+        this.isLoading = false;
+        alert(`Something went wrong=> ${error.message}`);
       }
-      this.isLoading = false;
     });
   }
 

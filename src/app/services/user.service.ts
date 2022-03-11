@@ -4,6 +4,8 @@ import { User } from '../models/user.model';
 import { concatMap, map, Subject } from 'rxjs';
 import { Todo } from '../models/todo.model';
 import { Photo } from '../models/photo.model';
+import { Album } from '../models/album.model';
+import { Post } from '../models/post.model';
 
 @Injectable({
   providedIn: 'root',
@@ -48,13 +50,13 @@ export class UserService {
   }
 
   fetchUserPosts(userId: string) {
-    return this.http.get(
+    return this.http.get<Post[]>(
       `https://jsonplaceholder.typicode.com/users/${userId}/posts`
     );
   }
 
   fetchComments(id: number) {
-    return this.http.get(
+    return this.http.get<Comment[]>(
       `https://jsonplaceholder.typicode.com/posts/${id}/comments`
     );
   }
@@ -66,7 +68,7 @@ export class UserService {
   }
 
   fetchAlbums(userId: string) {
-    return this.http.get(
+    return this.http.get<Album[]>(
       `https://jsonplaceholder.typicode.com/users/${userId}/albums`
     );
   }

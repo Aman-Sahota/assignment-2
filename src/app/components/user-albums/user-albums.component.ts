@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Album } from 'src/app/models/album.model';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./user-albums.component.scss'],
 })
 export class UserAlbumsComponent implements OnInit {
-  userAlbums: any;
+  userAlbums: Album[] = [];
   isLoading: boolean = false;
 
   constructor(
@@ -24,7 +25,7 @@ export class UserAlbumsComponent implements OnInit {
     this.isLoading = true;
     this.userService
       .fetchAlbums(this.activatedRoute.snapshot.params['userId'])
-      .subscribe((response) => {
+      .subscribe((response: Album[]) => {
         this.isLoading = false;
         this.userAlbums = response;
       });

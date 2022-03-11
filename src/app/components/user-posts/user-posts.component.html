@@ -32,20 +32,23 @@
           <div>
             <p>
               <i class="bi bi-person-fill"></i> by
-              <a class="link-hover" routerLink="/users/{{ userDetail.id }}">{{
-                userDetail.username
+              <a class="link-hover" routerLink="/users/{{ userId }}">{{
+                getUser(userId)?.username
               }}</a>
               |
-              <span class="me-1">
-                <i class="bi bi-chat-left-dots-fill"></i>
+              <span *ngIf="post.comments">
+                <span class="me-1">
+                  <i class="bi bi-chat-left-dots-fill"></i>
+                </span>
+                <span class="comments-link" (click)="toggleComments(post.id)">
+                  {{ post.comments.length }}Comments
+                </span>
               </span>
-              <span class="comments-link" (click)="toggleComments(post.id)"
-                >{{ post.comments.length }}Comments</span
-              >
             </p>
           </div>
         </div>
         <div
+          *ngIf="post.comments"
           class="row mb-2 {{ post.showComments ? '' : 'd-none' }}"
           id="comments"
         >
@@ -54,18 +57,36 @@
               <div class="card-header">
                 <h2>Comments</h2>
               </div>
-              <ul class="list-group list-group-flush">
+              <span *ngIf="post.comments.length === 0"> No Comments </span>
+              <ul
+                *ngIf="post.comments.length > 0"
+                class="list-group list-group-flush"
+              >
                 <li
                   class="list-group-item text-capitalize"
                   *ngFor="let comment of post.comments"
                 >
                   <p>
-                    <i class="bi bi-person-fill me-1"></i
-                    ><strong>
-                      {{ comment.email }}
-                    </strong>
+                    <span
+                      class="user-info"
+                      (click)="goToUser(comment.user?.id)"
+                    >
+                      <img
+                        [src]="comment.user?.image"
+                        class="img-fluid rounded-circle"
+                        alt="UserPic"
+                        [ngStyle]="{ height: '2rem', width: '2rem' }"
+                      />
+                      <span>
+                        <strong>
+                          {{ comment.user?.username }}
+                        </strong>
+                      </span>
+                    </span>
                   </p>
-                  {{ comment.body }}
+                  <p>
+                    {{ comment.body }}
+                  </p>
                 </li>
               </ul>
             </div>
