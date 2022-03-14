@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
+  response: User[] = [];
   users: User[] = [];
   isLoading: boolean = false;
 
@@ -22,7 +23,7 @@ export class UserListComponent implements OnInit {
     this.isLoading = true;
     this.userService.fetchUserList().subscribe(async (response: User[]) => {
       try {
-        this.users = response;
+        this.response = response;
         for (let index = 0; index < response.length; index++) {
           const user = response[index];
           const values: any = await Promise.all([
@@ -30,10 +31,10 @@ export class UserListComponent implements OnInit {
             this.fetchUserAlbums(user.id),
             this.fetchUserTodos(user.id),
           ]);
-          this.users[index].userPostCount = values[0];
-          this.users[index].userAlbumCount = values[1];
-          this.users[index].userTodoFalseCount = values[2].incomplete;
-          this.users[index].userTodoTrueCount = values[2].completed;
+          this.response[index].userPostCount = values[0];
+          this.response[index].userAlbumCount = values[1];
+          this.response[index].userTodoFalseCount = values[2].incomplete;
+          this.response[index].userTodoTrueCount = values[2].completed;
         }
         this.isLoading = false;
       } catch (error: any) {
@@ -89,5 +90,9 @@ export class UserListComponent implements OnInit {
         }
       );
     });
+  }
+
+  pagination(data: User[]) {
+    this.users = data;
   }
 }

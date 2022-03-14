@@ -9,6 +9,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./user-album-photos.component.scss'],
 })
 export class UserAlbumPhotosComponent implements OnInit {
+  response: Photo[] = [];
   userPhotos: Photo[] = [];
   isLoading: boolean = false;
 
@@ -26,8 +27,12 @@ export class UserAlbumPhotosComponent implements OnInit {
     this.userService
       .fetchAlbumPhotos(this.activatedRoute.snapshot.params['albumId'])
       .subscribe((response: Photo[]) => {
-        this.userPhotos = response;
+        this.response = response;
         this.isLoading = false;
       });
+  }
+
+  pagination(data: Photo[]) {
+    this.userPhotos = data;
   }
 }

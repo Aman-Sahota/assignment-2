@@ -1,0 +1,69 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<nav
+  class="d-flex justify-content-between"
+  aria-label="Page navigation example"
+>
+  <ul class="pagination">
+    <li class="page-item {{ currentPage === 1 && 'disabled' }}">
+      <button
+        class="page-link"
+        aria-label="Previous"
+        [disabled]="currentPage === 1"
+        (click)="previousPage()"
+      >
+        <span aria-hidden="true">&laquo;</span>
+      </button>
+    </li>
+
+    <li
+      *ngFor="let page of pages"
+      class="page-item {{ currentPage === page && 'active' }}"
+    >
+      <button class="page-link" (click)="setPage(page)">
+        {{ page }}
+      </button>
+    </li>
+
+    <li
+      class="page-item {{
+        currentPage === pages[pages.length - 1] && 'disabled'
+      }}"
+    >
+      <button
+        class="page-link"
+        aria-label="Next"
+        [disabled]="currentPage === pages[pages.length - 1]"
+        (click)="nextPage()"
+      >
+        <span aria-hidden="true">&raquo;</span>
+      </button>
+    </li>
+  </ul>
+  <div class="dropdown">
+    <button
+      class="btn btn-primary dropdown-toggle"
+      type="button"
+      id="dropdownMenuLink"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+      (click)="toggleLimitDropdown()"
+    >
+      Select limit
+    </button>
+
+    <ul
+      class="dropdown-menu {{ showLimit && 'show' }}"
+      aria-labelledby="dropdownMenuLink"
+    >
+      <li *ngFor="let limitValue of limitValues">
+        <button
+          class="dropdown-item"
+          role="button"
+          (click)="setLimit(limitValue)"
+        >
+          {{ limitValue }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -12,8 +12,9 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./user-posts.component.scss'],
 })
 export class UserPostsComponent implements OnInit {
-  userList: User[] = [];
+  response: Post[] = [];
   userPosts: Post[] = [];
+  userList: User[] = [];
   isLoading: boolean = false;
   userId: string;
 
@@ -66,7 +67,7 @@ export class UserPostsComponent implements OnInit {
             });
           });
 
-          this.userPosts = postArray;
+          this.response = postArray;
 
           this.isLoading = false;
         } catch (error: any) {
@@ -93,5 +94,9 @@ export class UserPostsComponent implements OnInit {
 
   goToUser(id: any) {
     this.router.navigate(['/users', id]);
+  }
+
+  pagination(data: Post[]) {
+    this.userPosts = data;
   }
 }

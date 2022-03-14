@@ -96,4 +96,8 @@
     </div>
     <hr />
   </div>
+  <app-pagination
+    [data]="response"
+    (slicedData)="pagination($event)"
+  ></app-pagination>
 </div>

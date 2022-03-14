@@ -9,6 +9,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./user-albums.component.scss'],
 })
 export class UserAlbumsComponent implements OnInit {
+  response: Album[] = [];
   userAlbums: Album[] = [];
   isLoading: boolean = false;
 
@@ -27,7 +28,11 @@ export class UserAlbumsComponent implements OnInit {
       .fetchAlbums(this.activatedRoute.snapshot.params['userId'])
       .subscribe((response: Album[]) => {
         this.isLoading = false;
-        this.userAlbums = response;
+        this.response = response;
       });
+  }
+
+  pagination(data: Album[]) {
+    this.userAlbums = data;
   }
 }

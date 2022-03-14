@@ -14,6 +14,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { UserAlbumPhotosComponent } from './components/user-album-photos/user-album-photos.component';
 import { GoBack } from './components/common/go-back/go-back.component';
 import { Loader } from './components/common/loader/loader.component';
+import { PaginationComponent } from './components/common/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { Loader } from './components/common/loader/loader.component';
     UserAlbumPhotosComponent,
     GoBack,
     Loader,
+    PaginationComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
