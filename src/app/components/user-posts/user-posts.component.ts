@@ -1,4 +1,10 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    OnChanges,
+    OnInit,
+    SimpleChanges
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from 'src/app/models/post.model';
 import { User } from 'src/app/models/user.model';
@@ -21,7 +27,8 @@ export class UserPostsComponent implements OnInit {
     constructor(
         private userService: UserService,
         private activatedRoute: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private cdr: ChangeDetectorRef
     ) {
         this.userId = this.activatedRoute.snapshot.params['userId'];
     }
@@ -107,5 +114,6 @@ export class UserPostsComponent implements OnInit {
 
     pagination(data: Post[]) {
         this.userPosts = data;
+        this.cdr.detectChanges();
     }
 }

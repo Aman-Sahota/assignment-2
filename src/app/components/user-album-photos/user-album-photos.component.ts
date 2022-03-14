@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Photo } from 'src/app/models/photo.model';
 import { UserService } from '../../services/user.service';
@@ -15,7 +15,8 @@ export class UserAlbumPhotosComponent implements OnInit {
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private userService: UserService
+        private userService: UserService,
+        private cdr: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -34,5 +35,6 @@ export class UserAlbumPhotosComponent implements OnInit {
 
     pagination(data: Photo[]) {
         this.userPhotos = data;
+        this.cdr.detectChanges();
     }
 }

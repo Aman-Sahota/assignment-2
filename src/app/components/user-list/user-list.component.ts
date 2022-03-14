@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Todo } from 'src/app/models/todo.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
@@ -13,7 +13,10 @@ export class UserListComponent implements OnInit {
     users: User[] = [];
     isLoading: boolean = false;
 
-    constructor(private userService: UserService) {}
+    constructor(
+        private userService: UserService,
+        private cdr: ChangeDetectorRef
+    ) {}
 
     ngOnInit(): void {
         this.fetchUsers();
@@ -96,5 +99,6 @@ export class UserListComponent implements OnInit {
 
     pagination(data: User[]) {
         this.users = data;
+        this.cdr.detectChanges();
     }
 }
