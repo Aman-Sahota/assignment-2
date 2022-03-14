@@ -1,48 +1,48 @@
 <div class="container">
-  <app-go-back></app-go-back>
-  <app-loader *ngIf="isLoading"></app-loader>
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <h2>
-            Todos
-            <span class="badge bg-secondary rounded-pill">{{
-              getCount("incomplete")
-            }}</span>
-          </h2>
+    <app-go-back></app-go-back>
+    <app-loader *ngIf="isLoading"></app-loader>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2>
+                        Todos
+                        <span class="badge bg-secondary rounded-pill">{{
+                            getCount('incomplete')
+                        }}</span>
+                    </h2>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <div *ngFor="let userTodo of userTodos">
+                        <li
+                            class="list-group-item text-capitalize"
+                            *ngIf="!userTodo.completed"
+                        >
+                            <i class="bi bi-app"></i>
+                            {{ userTodo.title }}
+                        </li>
+                    </div>
+                </ul>
+                <div class="card-header">
+                    <h2>
+                        Completed
+                        <span class="badge bg-secondary rounded-pill">{{
+                            getCount('completed')
+                        }}</span>
+                    </h2>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <div *ngFor="let userTodo of userTodos">
+                        <li
+                            class="list-group-item text-capitalize text-decoration-line-through opacity-75"
+                            *ngIf="userTodo.completed"
+                        >
+                            <i class="bi bi-check2-square"></i>
+                            {{ userTodo.title }}
+                        </li>
+                    </div>
+                </ul>
+            </div>
         </div>
-        <ul class="list-group list-group-flush">
-          <div *ngFor="let userTodo of userTodos">
-            <li
-              class="list-group-item text-capitalize"
-              *ngIf="!userTodo.completed"
-            >
-              <i class="bi bi-app"></i>
-              {{ userTodo.title }}
-            </li>
-          </div>
-        </ul>
-        <div class="card-header">
-          <h2>
-            Completed
-            <span class="badge bg-secondary rounded-pill">{{
-              getCount("completed")
-            }}</span>
-          </h2>
-        </div>
-        <ul class="list-group list-group-flush">
-          <div *ngFor="let userTodo of userTodos">
-            <li
-              class="list-group-item text-capitalize text-decoration-line-through opacity-75"
-              *ngIf="userTodo.completed"
-            >
-              <i class="bi bi-check2-square"></i>
-              {{ userTodo.title }}
-            </li>
-          </div>
-        </ul>
-      </div>
     </div>
-  </div>
 </div>

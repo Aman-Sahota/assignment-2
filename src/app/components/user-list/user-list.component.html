@@ -1,14 +1,14 @@
 <div class="container">
-  <app-loader *ngIf="isLoading"></app-loader>
-  <div class="row pt-4">
-    <app-user-list-item
-      class="col-12 col-md-6 col-lg-3 mb-4"
-      *ngFor="let user of users"
-      [user]="user"
-    ></app-user-list-item>
-  </div>
-  <app-pagination
-    [data]="response"
-    (slicedData)="pagination($event)"
-  ></app-pagination>
+    <app-loader *ngIf="isLoading"></app-loader>
+    <div class="row pt-4">
+        <app-user-list-item
+            class="col-12 col-md-6 col-lg-3 mb-4"
+            *ngFor="let user of users"
+            [user]="user"
+        ></app-user-list-item>
+    </div>
+    <app-pagination
+        [data]="response"
+        (slicedData)="pagination($event)"
+    ></app-pagination>
 </div>

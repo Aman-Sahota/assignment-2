@@ -9,43 +9,43 @@ import { UserPostsComponent } from './components/user-posts/user-posts.component
 import { UserTodosComponent } from './components/user-todos/user-todos.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/users',
-    pathMatch: 'full',
-  },
-  {
-    path: 'users',
-    component: UserListComponent,
-  },
-  {
-    path: 'users/:userId',
-    component: UserDetailComponent,
-  },
-  {
-    path: 'users/:userId/posts',
-    component: UserPostsComponent,
-  },
-  {
-    path: 'users/:userId/albums',
-    component: UserAlbumsComponent,
-  },
-  {
-    path: 'users/:userId/albums/:albumId',
-    component: UserAlbumPhotosComponent,
-  },
-  {
-    path: 'users/:userId/todos',
-    component: UserTodosComponent,
-  },
-  {
-    path: '**',
-    component: NotFoundComponent,
-  },
+    {
+        path: '',
+        redirectTo: '/users',
+        pathMatch: 'full'
+    },
+    {
+        path: 'users',
+        component: UserListComponent
+    },
+    {
+        path: 'users/:userId',
+        component: UserDetailComponent
+    },
+    {
+        path: 'users/:userId/posts',
+        component: UserPostsComponent
+    },
+    {
+        path: 'users/:userId/albums',
+        component: UserAlbumsComponent
+    },
+    {
+        path: 'users/:userId/albums/:albumId',
+        component: UserAlbumPhotosComponent
+    },
+    {
+        path: 'users/:userId/todos',
+        component: UserTodosComponent
+    },
+    {
+        path: '**',
+        component: NotFoundComponent
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {}

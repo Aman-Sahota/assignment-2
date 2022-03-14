@@ -1,14 +1,14 @@
 .container {
-  min-height: 100vh;
-  background-color: #dedede;
+    min-height: 100vh;
+    background-color: #dedede;
 
-  .custom-heading {
-    text-decoration: underline;
-    cursor: pointer;
+    .custom-heading {
+        text-decoration: underline;
+        cursor: pointer;
 
-    &:hover {
-      text-decoration: none;
-      color: #0d6efd;
+        &:hover {
+            text-decoration: none;
+            color: #0d6efd;
+        }
     }
-  }
 }

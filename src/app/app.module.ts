@@ -17,22 +17,22 @@ import { Loader } from './components/common/loader/loader.component';
 import { PaginationComponent } from './components/common/pagination/pagination.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    UserListComponent,
-    UserDetailComponent,
-    UserPostsComponent,
-    UserAlbumsComponent,
-    UserTodosComponent,
-    UserListItemComponent,
-    NotFoundComponent,
-    UserAlbumPhotosComponent,
-    GoBack,
-    Loader,
-    PaginationComponent,
-  ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
-  providers: [],
-  bootstrap: [AppComponent],
+    declarations: [
+        AppComponent,
+        UserListComponent,
+        UserDetailComponent,
+        UserPostsComponent,
+        UserAlbumsComponent,
+        UserTodosComponent,
+        UserListItemComponent,
+        NotFoundComponent,
+        UserAlbumPhotosComponent,
+        GoBack,
+        Loader,
+        PaginationComponent
+    ],
+    imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
