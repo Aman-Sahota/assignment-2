@@ -1,100 +1,126 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription, take, tap } from 'rxjs';
+import { Album } from 'src/app/models/album.model';
+import { Post } from 'src/app/models/post.model';
 import { Todo } from 'src/app/models/todo.model';
 import { User } from 'src/app/models/user.model';
-import { UserService } from 'src/app/services/user.service';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
     selector: 'app-user-list',
     templateUrl: './user-list.component.html',
     styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
-    response: User[] = [];
+export class UserListComponent implements OnInit, OnDestroy {
+    userResponse: User[] = [];
+    userSub = new Subscription();
+
+    postResponse: Post[] = [];
+    postSub = new Subscription();
+
+    albumResponse: Album[] = [];
+    albumSub = new Subscription();
+
+    todoResponse: Todo[] = [];
+    todoSub = new Subscription();
+
     users: User[] = [];
-    isLoading: boolean = false;
 
     constructor(
-        private userService: UserService,
+        private dataService: DataService,
         private cdr: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
         this.fetchUsers();
+        this.fetchPosts();
+        this.fetchAlbums();
+        this.fetchTodos();
     }
 
     fetchUsers() {
-        this.isLoading = true;
-        this.userService.fetchUserList().subscribe(async (response: User[]) => {
-            try {
-                this.response = response;
-                for (let index = 0; index < response.length; index++) {
-                    const user = response[index];
-                    const values: any = await Promise.all([
-                        this.fetchUserPosts(user.id),
-                        this.fetchUserAlbums(user.id),
-                        this.fetchUserTodos(user.id)
-                    ]);
-                    this.response[index].userPostCount = values[0];
-                    this.response[index].userAlbumCount = values[1];
-                    this.response[index].userTodoFalseCount =
-                        values[2].incomplete;
-                    this.response[index].userTodoTrueCount =
-                        values[2].completed;
-                }
-                this.isLoading = false;
-            } catch (error: any) {
-                this.isLoading = false;
-                alert(`Something went wrong=> ${error.message}`);
+        this.userSub = this.dataService.userList.subscribe((data) => {
+            let modifiedUserArr: User[] = [];
+            for (let index = 0; index < data.length; index++) {
+                const user = data[index];
+                const postCount = this.getUserPostCount(user.id);
+                const albumCount = this.getUserAlbumCount(user.id);
+                const todoCount = this.getUserTodoCount(user.id);
+                modifiedUserArr.push({
+                    ...user,
+                    userPostCount: postCount,
+                    userAlbumCount: albumCount,
+                    userTodoTrueCount: todoCount.completed,
+                    userTodoFalseCount: todoCount.incomplete
+                });
             }
+            this.userResponse = modifiedUserArr;
         });
     }
 
-    fetchUserPosts(userId: number) {
-        return new Promise((resolve, reject) => {
-            this.userService.fetchUserPosts(userId.toString()).subscribe(
-                (response: any) => {
-                    resolve(response.length);
-                },
-                (error) => {
-                    reject(error);
+    getUserPostCount(userId: number) {
+        let postCount = 0;
+        for (let index = 0; index < this.postResponse.length; index++) {
+            const post = this.postResponse[index];
+            if (post.userId === userId) {
+                postCount++;
+            }
+        }
+        return postCount;
+    }
+
+    getUserAlbumCount(userId: number) {
+        let albumCount = 0;
+        for (let index = 0; index < this.albumResponse.length; index++) {
+            const album = this.albumResponse[index];
+            if (album.userId === userId) {
+                albumCount++;
+            }
+        }
+        return albumCount;
+    }
+
+    getUserTodoCount(userId: number) {
+        let todoCount = {
+            completed: 0,
+            incomplete: 0
+        };
+        for (let index = 0; index < this.todoResponse.length; index++) {
+            const todo = this.todoResponse[index];
+            if (todo.userId === userId) {
+                if (todo.completed) {
+                    todoCount.completed++;
+                } else {
+                    todoCount.incomplete++;
                 }
-            );
+            }
+        }
+        return todoCount;
+    }
+
+    fetchPosts() {
+        this.postSub = this.dataService.postsList.subscribe((data) => {
+            this.postResponse = data;
         });
     }
 
-    fetchUserAlbums(userId: number) {
-        return new Promise((resolve, reject) => {
-            this.userService.fetchAlbums(userId.toString()).subscribe(
-                (response: any) => {
-                    resolve(response.length);
-                },
-                (error) => {
-                    reject(error);
-                }
-            );
+    fetchAlbums() {
+        this.albumSub = this.dataService.albumsList.subscribe((data) => {
+            this.albumResponse = data;
         });
     }
 
-    fetchUserTodos(userId: number) {
-        return new Promise((resolve, reject) => {
-            this.userService.fetchTodos(userId.toString()).subscribe(
-                (response: Todo[]) => {
-                    let completed = 0;
-                    let incomplete = 0;
-                    response.map((todo: Todo) => {
-                        if (todo.completed) {
-                            completed += 1;
-                        } else {
-                            incomplete += 1;
-                        }
-                    });
-                    resolve({ completed, incomplete });
-                },
-                (error) => {
-                    reject(error);
-                }
-            );
+    fetchTodos() {
+        this.todoSub = this.dataService.todosList.subscribe((data) => {
+            this.todoResponse = data;
         });
+    }
+
+    ngOnDestroy(): void {
+        this.userSub.unsubscribe();
+        this.postSub.unsubscribe();
+        this.albumSub.unsubscribe();
+        this.todoSub.unsubscribe();
     }
 
     pagination(data: User[]) {

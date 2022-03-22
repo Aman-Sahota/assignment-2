@@ -2,6 +2,7 @@
     <div class="row text-center">
         <h1 class="custom-heading" (click)="goToHome()">Compro Assignment</h1>
     </div>
+    <app-loader *ngIf="isLoading"></app-loader>
     <hr />
     <router-outlet></router-outlet>
 </div>

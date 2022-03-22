@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Album } from 'src/app/models/album.model';
-import { UserService } from '../../services/user.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
     selector: 'app-user-albums',
@@ -15,23 +15,23 @@ export class UserAlbumsComponent implements OnInit {
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private userService: UserService,
+        private dataService: DataService,
         private cdr: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
-        this.fetchUserAlbums();
+        // this.fetchUserAlbums();
     }
 
-    fetchUserAlbums() {
-        this.isLoading = true;
-        this.userService
-            .fetchAlbums(this.activatedRoute.snapshot.params['userId'])
-            .subscribe((response: Album[]) => {
-                this.isLoading = false;
-                this.response = response;
-            });
-    }
+    // fetchUserAlbums() {
+    //     this.isLoading = true;
+    //     this.userService
+    //         .fetchAlbums(this.activatedRoute.snapshot.params['userId'])
+    //         .subscribe((response: Album[]) => {
+    //             this.isLoading = false;
+    //             this.response = response;
+    //         });
+    // }
 
     pagination(data: Album[]) {
         this.userAlbums = data;
