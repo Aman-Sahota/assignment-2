@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Todo } from 'src/app/models/todo.model';
-import { UserService } from '../../services/user.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
     selector: 'app-user-todos',
@@ -10,11 +10,10 @@ import { UserService } from '../../services/user.service';
 })
 export class UserTodosComponent implements OnInit {
     userTodos: Todo[] = [];
-    isLoading: boolean = false;
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private userService: UserService
+        private dataService: DataService
     ) {}
 
     ngOnInit(): void {
@@ -22,12 +21,10 @@ export class UserTodosComponent implements OnInit {
     }
 
     fetchUserTodos() {
-        this.isLoading = true;
-        this.userService
-            .fetchTodos(this.activatedRoute.snapshot.params['userId'])
+        this.dataService
+            .fetchUserTodos(this.activatedRoute.snapshot.params['userId'])
             .subscribe((response: Todo[]) => {
                 this.userTodos = response;
-                this.isLoading = false;
             });
     }
 

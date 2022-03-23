@@ -3,5 +3,6 @@
         <h1 class="custom-heading" (click)="goToHome()">Compro Assignment</h1>
     </div>
     <hr />
+    <app-loader *ngIf="isLoading"></app-loader>
     <router-outlet></router-outlet>
 </div>

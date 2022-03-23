@@ -1,16 +1,14 @@
 import {
     ChangeDetectorRef,
     Component,
-    OnChanges,
     OnInit,
-    SimpleChanges
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from 'src/app/models/post.model';
 import { User } from 'src/app/models/user.model';
 import { Comment } from 'src/app/models/comment.model';
 
-import { UserService } from '../../services/user.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
     selector: 'app-user-posts',
@@ -21,11 +19,10 @@ export class UserPostsComponent implements OnInit {
     response: Post[] = [];
     userPosts: Post[] = [];
     userList: User[] = [];
-    isLoading: boolean = false;
     userId: string;
 
     constructor(
-        private userService: UserService,
+        private dataService: DataService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private cdr: ChangeDetectorRef
@@ -39,7 +36,7 @@ export class UserPostsComponent implements OnInit {
     }
 
     fetchUserList() {
-        this.userService.fetchUserList().subscribe((response: User[]) => {
+        this.dataService.fetchUsers().subscribe((response: User[]) => {
             this.userList = response;
         });
     }
@@ -49,57 +46,33 @@ export class UserPostsComponent implements OnInit {
     }
 
     fetchUserPosts() {
-        this.isLoading = true;
-        this.userService
+        this.dataService
             .fetchUserPosts(this.activatedRoute.snapshot.params['userId'])
-            .subscribe(async (response: Post[]) => {
+            .subscribe((response: Post[]) => {
                 try {
                     const postArray: Post[] = [];
-                    const promiseArray: any[] = [];
 
                     for (let index = 0; index < response.length; index++) {
                         const post = response[index];
-                        promiseArray.push(this.fetchPostComments(post.id));
+                        const comments = this.dataService.fetchPostComments(post.id)
+                        comments.forEach(comment=>{
+                            comment.user = {
+                                ...this.userList[Math.floor(Math.random() * 10)]
+                            };
+                        })
                         postArray.push({
                             ...post,
-                            comments: [],
+                            comments,
                             showComments: false
                         });
                     }
 
-                    const values: Comment[][] = await Promise.all(promiseArray);
-
-                    values.forEach((value: any) => {
-                        value.forEach((comment: any) => {
-                            let postIndex: number = postArray.findIndex(
-                                (post) => post.id === comment.postId
-                            );
-                            postArray[postIndex].comments?.push(comment);
-                        });
-                    });
-
                     this.response = postArray;
 
-                    this.isLoading = false;
                 } catch (error: any) {
                     alert(`Something went wrong => ${error.message}`);
                 }
             });
-    }
-
-    fetchPostComments(postId: any) {
-        return new Promise((resolve, reject) => {
-            this.userService
-                .fetchComments(postId)
-                .subscribe((response: any) => {
-                    response.forEach((comment: Comment) => {
-                        comment.user = {
-                            ...this.userList[Math.floor(Math.random() * 10)]
-                        };
-                    });
-                    resolve(response);
-                });
-        });
     }
 
     toggleComments(postId: number) {
